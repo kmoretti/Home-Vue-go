@@ -8,7 +8,7 @@ WORKDIR /app
 
 COPY package*.json ./
 RUN --mount=type=cache,target=/root/.npm \
-    npm ci
+    npm install
 
 COPY . .
 RUN npm run build
