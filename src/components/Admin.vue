@@ -1775,6 +1775,7 @@ onUnmounted(() => {
   flex-direction: column;
   min-height: 100vh;
   overflow: hidden;
+  background: var(--background-color);
 }
 
 .admin-topbar {
@@ -2102,7 +2103,7 @@ onUnmounted(() => {
   width: 20px;
   left: 3px;
   bottom: 3px;
-  background-color: white;
+  background: #fff;
   transition: 0.3s;
   border-radius: 50%;
 }
@@ -2112,6 +2113,7 @@ onUnmounted(() => {
 }
 
 .switch input:checked + .slider:before {
+  background: #fff;
   transform: translateX(24px);
 }
 
@@ -2871,16 +2873,6 @@ tbody tr:hover {
 }
 
 /* 深色模式适配 */
-.dark-mode .admin-wrapper {
-  filter: brightness(0.7);
-}
-
-.dark-mode .config-card,
-.dark-mode .data-table-card,
-.dark-mode .modal-content {
-  background: rgba(var(--background-color-rgb), 0.8);
-}
-
 .dark-mode .nav-item.active {
   background: rgba(var(--hover-link-color-rgb, 255, 204, 0), 0.15);
 }
