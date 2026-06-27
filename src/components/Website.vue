@@ -4,7 +4,7 @@
       <div class="swiper-wrapper">
         <div v-for="(siteChunk, index) in chunkedSites" :key="index" class="swiper-slide">
           <div class="site-grid">
-            <div v-for="(site, i) in siteChunk" :key="i" class="site-box" @click="openLink(site.url)">
+            <div v-for="(site, i) in siteChunk" :key="i" class="site-box" @click="openLink(site.url)" :title="site.name">
               <div class="site-content">
                 <IconDisplay :icon="site.icon" />
                 <span class="site-name">{{ site.name }}</span>

@@ -1,6 +1,6 @@
 <template>
   <img
-    v-if="isImageUrl"
+    v-if="isImageUrl && !imgError"
     :src="icon"
     class="icon-img"
     :class="imgClass"
@@ -23,12 +23,19 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const props = defineProps({
   icon: { type: String, default: '' },
   hoverColor: { type: String, default: '' },
   size: { type: [String, Number], default: '' },
+})
+
+const imgError = ref(false)
+
+// icon 变化时重置错误状态，支持重试
+watch(() => props.icon, () => {
+  imgError.value = false
 })
 
 const isImageUrl = computed(() => {
@@ -79,6 +86,7 @@ const imgStyle = computed(() => {
 
 const emit = defineEmits(['error'])
 const onError = () => {
+  imgError.value = true
   emit('error')
 }
 </script>

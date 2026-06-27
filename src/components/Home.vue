@@ -140,6 +140,10 @@ const loadRotatingTexts = async () => {
 };
 
 const initializeTyped = () => {
+  if (!descriptionElement.value) {
+    console.debug('descriptionElement 尚未挂载，延迟初始化 Typed.js')
+    return
+  }
   if (typedInstance) {
     typedInstance.destroy();
   }
@@ -181,7 +185,11 @@ if (window.BroadcastChannel) {
       if (typedInstance) {
         typedInstance.destroy()
       }
-      initializeTyped()
+      try {
+        initializeTyped()
+      } catch (e) {
+        console.debug('Typed.js 热更新初始化失败:', e)
+      }
       // 停留时间显示状态会在loadData中更新
       // 使用 nextTick 确保 DOM 更新
       await nextTick()
@@ -223,7 +231,11 @@ watch(showVisitTimer, async (newValue, oldValue) => {
 onMounted(async () => {
   await loadData();
   await loadRotatingTexts();
-  initializeTyped();
+  try {
+    initializeTyped();
+  } catch (e) {
+    console.debug('Typed.js 初始化失败（异步时序问题）:', e)
+  }
   trackVisit(); // 记录访问
 });
 
