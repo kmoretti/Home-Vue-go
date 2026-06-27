@@ -9,8 +9,11 @@ export async function loadAndApplyFrontendConfig() {
     const config = res.data
 
     // 更新页面标题
-    if (config.title) {
+    // 防御：如果 title 看起来像 URL（错误的用户配置），忽略它
+    if (config.title && isTitleValid(config.title)) {
       document.title = config.title
+    } else if (config.siteName) {
+      document.title = config.siteName
     }
 
 		// 更新meta标签
@@ -92,4 +95,18 @@ function loadUmamiScript(src, websiteId) {
   script.src = src
   script.setAttribute('data-website-id', websiteId)
   document.head.appendChild(script)
+}
+
+/**
+ * 验证标题是否有效（不是URL或其他无效内容）
+ */
+function isTitleValid(title) {
+  if (!title) return false
+  // 如果以 http:// 或 https:// 开头，说明是误填的URL
+  if (/^https?:\/\//i.test(title)) return false
+  // 标题长度不能超过100个字符（URL通常更长）
+  if (title.length > 100) return false
+  // 不包含换行符
+  if (/\n/.test(title)) return false
+  return true
 }
