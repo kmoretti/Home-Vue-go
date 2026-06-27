@@ -1,0 +1,65 @@
+name: Build And Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USER_NAME }}
+          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+
+      - name: Extract Version
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            VERSION_TAG=${GITHUB_REF_NAME#v}
+            echo "VERSION_TAG=$VERSION_TAG" >> $GITHUB_ENV
+          else
+            echo "VERSION_TAG=latest" >> $GITHUB_ENV
+          fi
+          echo "COMMIT_ID=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
+
+      - name: Build and Push Image
+        uses: docker/build-push-action@v6
+        with:
+          push: ${{ github.event_name != 'pull_request' }}
+          context: .
+          platforms: |
+            linux/amd64
+            linux/arm64
+          tags: |
+            ${{ secrets.DOCKER_USER_NAME }}/home-vue-go:${{ env.VERSION_TAG }}
+            ${{ secrets.DOCKER_USER_NAME }}/home-vue-go:${{ github.sha }}
+      - name: Image Info
+        run: |
+          echo "## Docker Image Info" >> $GITHUB_STEP_SUMMARY
+          echo "| Item | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Image | ${{ secrets.DOCKER_USER_NAME }}/home-vue-go:${{ env.VERSION_TAG }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Commit | ${{ env.COMMIT_ID }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Platforms | linux/amd64, linux/arm64 |" >> $GITHUB_STEP_SUMMARY
