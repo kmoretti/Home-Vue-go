@@ -6,7 +6,7 @@
           <div class="site-grid">
             <div v-for="(site, i) in siteChunk" :key="i" class="site-box" @click="openLink(site.url)">
               <div class="site-content">
-                <i :class="site.icon" aria-hidden="true"></i>
+                <IconDisplay :icon="site.icon" />
                 <span class="site-name">{{ site.name }}</span>
               </div>
             </div>
@@ -23,6 +23,7 @@ import { ref, onMounted } from 'vue';
 import Swiper from 'swiper/bundle';
 import 'swiper/swiper-bundle.css';
 import { getSites } from '../api';
+import IconDisplay from './IconDisplay.vue';
 
 const sites = ref([]);
 const chunkedSites = ref([]);

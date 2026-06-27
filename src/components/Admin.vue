@@ -380,7 +380,7 @@
                     <td>{{ site.id }}</td>
                     <td>
                       <div class="cell-content">
-                        <i :class="site.icon" v-if="site.icon"></i>
+                        <IconDisplay :icon="site.icon" v-if="site.icon" />
                         <span>{{ site.name }}</span>
                       </div>
                     </td>
@@ -448,7 +448,7 @@
                     </td>
                     <td>
                       <div class="icon-preview">
-                        <i :class="contact.icon" :style="{ color: contact.hoverColor }"></i>
+                        <IconDisplay :icon="contact.icon" :hoverColor="contact.hoverColor" />
                       </div>
                     </td>
                     <td>
@@ -534,9 +534,9 @@
                   选择图标
                 </button>
               </div>
-              <small class="form-hint">点击"选择图标"按钮从图标库中选择，或手动输入Font Awesome图标类名</small>
+              <small class="form-hint">支持 FontAwesome（如 fa fa-blog）、Iconify（如 mdi:home）或图片URL</small>
               <div v-if="siteForm.icon" class="icon-preview-inline">
-                <i :class="siteForm.icon"></i>
+                <IconDisplay :icon="siteForm.icon" />
                 <code>{{ siteForm.icon }}</code>
               </div>
             </div>
@@ -579,20 +579,20 @@
               <select v-model="contactForm.type" required>
                 <option value="Email">Email</option>
                 <option value="Github">Github</option>
+                <option value="QQ">QQ</option>
                 <option value="支付宝">支付宝</option>
                 <option value="微信">微信</option>
                 <option value="其他">其他</option>
               </select>
             </div>
             <div class="form-group">
-              <label>图标类名 <span class="required">*</span></label>
+              <label>图标</label>
               <div class="icon-input-wrapper">
                 <input 
                   v-model="contactForm.icon" 
                   type="text" 
-                  placeholder="点击右侧按钮选择图标" 
+                  placeholder="FontAwesome 类名 / Iconify 图标名 / 图片URL" 
                   required 
-                  readonly
                   class="icon-input"
                 />
                 <button @click="openIconPicker('contact')" type="button" class="icon-picker-btn">
@@ -600,9 +600,9 @@
                   选择图标
                 </button>
               </div>
-              <small class="form-hint">点击"选择图标"按钮从图标库中选择，或手动输入Font Awesome图标类名</small>
+              <small class="form-hint">支持 FontAwesome（如 fab fa-qq）、Iconify（如 logos:github-icon）或图片URL</small>
               <div v-if="contactForm.icon" class="icon-preview-inline">
-                <i :class="contactForm.icon"></i>
+                <IconDisplay :icon="contactForm.icon" />
                 <code>{{ contactForm.icon }}</code>
               </div>
             </div>
@@ -611,7 +611,7 @@
               <input v-model="contactForm.url" type="text" :placeholder="contactForm.type === 'Email' ? 'mailto:example@domain.com' : 'https://...'" required />
               <small class="form-hint" v-if="contactForm.type === 'Email'">Email必须使用mailto:格式</small>
             </div>
-            <div class="form-group" v-if="contactForm.type === '支付宝' || contactForm.type === '微信'">
+            <div class="form-group" v-if="contactForm.type === '支付宝' || contactForm.type === '微信' || contactForm.type === 'QQ'">
               <label>二维码图片 <span class="required">*</span></label>
               <IconSelector
                 v-model="contactForm.qrCode"
@@ -829,6 +829,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { adminAPI } from '../api'
 import IconSelector from './IconSelector.vue'
 import IconPicker from './IconPicker.vue'
+import IconDisplay from './IconDisplay.vue'
 import Dashboard from './Dashboard.vue'
 import { loadAndApplyFrontendConfig } from '../utils/frontendConfig'
 

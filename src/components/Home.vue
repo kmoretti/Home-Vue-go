@@ -16,11 +16,11 @@
     <div class="contact-section" v-motion-pop>
       <template v-for="contact in contacts" :key="contact.type">
         <a v-if="contact.url" :href="contact.url" target="_blank" class="contact-item" :style="{ '--hover-color': contact.hoverColor }">
-          <i :class="contact.icon"></i>
+          <IconDisplay :icon="contact.icon" />
           <span class="tooltip">{{ contact.type }}</span>
         </a>
         <span v-else @click="toggleQRCode(contact.qrCode)" class="contact-item" :style="{ '--hover-color': contact.hoverColor }">
-          <i :class="contact.icon"></i>
+          <IconDisplay :icon="contact.icon" />
           <span class="tooltip">{{ contact.type }}</span>
         </span>
       </template>
@@ -58,6 +58,7 @@ import api from '../api';
 import Website from './Website.vue';
 import AboutPage from './AboutPage.vue';
 import VisitTimer from './VisitTimer.vue';
+import IconDisplay from './IconDisplay.vue';
 import Typed from 'typed.js';
 
 const contacts = ref([]);
