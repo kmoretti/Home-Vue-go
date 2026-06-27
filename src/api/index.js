@@ -93,7 +93,7 @@ export const adminAPI = {
   getLoginHistory: (limit = 20) => api.get(`/admin/login-history?limit=${limit}`),
   
   // 轮换文本配置API
-  getRotatingTexts: () => api.get('/api/rotating-texts'),
+  getRotatingTexts: () => api.get('/rotating-texts'),
   updateRotatingTexts: (texts) => api.put('/admin/rotating-texts', { texts }),
 }
 

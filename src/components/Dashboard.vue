@@ -199,6 +199,8 @@ const drawTrendChart = (data) => {
   const ctx = canvas.getContext('2d')
   const width = canvas.width = canvas.offsetWidth
   const height = canvas.height = canvas.offsetHeight
+
+  if (width <= 0 || height <= 0) return
   
   ctx.clearRect(0, 0, width, height)
   
@@ -346,6 +348,8 @@ const drawSourceChart = (data) => {
   const ctx = canvas.getContext('2d')
   const width = canvas.width = canvas.offsetWidth
   const height = canvas.height = canvas.offsetHeight
+
+  if (width <= 0 || height <= 0) return
   
   ctx.clearRect(0, 0, width, height)
   
