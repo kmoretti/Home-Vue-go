@@ -1,0 +1,29 @@
+# Git
+.git
+.gitignore
+.github
+
+# Node
+node_modules
+
+# Go
+data
+
+# IDE
+.idea
+.vscode
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build output (rebuilt inside Docker)
+dist/home-vue-go
+dist/home-vue-go.exe
+
+# Docs
+BUILD.md
+
+# CI
+*.yml

@@ -42,7 +42,6 @@ jobs:
           else
             echo "VERSION_TAG=latest" >> $GITHUB_ENV
           fi
-          echo "COMMIT_ID=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
 
       - name: Build and Push Image
         uses: docker/build-push-action@v6
@@ -55,11 +54,14 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_USER_NAME }}/home-vue-go:${{ env.VERSION_TAG }}
             ${{ secrets.DOCKER_USER_NAME }}/home-vue-go:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
       - name: Image Info
         run: |
           echo "## Docker Image Info" >> $GITHUB_STEP_SUMMARY
           echo "| Item | Value |" >> $GITHUB_STEP_SUMMARY
           echo "|------|-------|" >> $GITHUB_STEP_SUMMARY
           echo "| Image | ${{ secrets.DOCKER_USER_NAME }}/home-vue-go:${{ env.VERSION_TAG }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Commit | ${{ env.COMMIT_ID }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Commit | ${GITHUB_SHA:0:7} |" >> $GITHUB_STEP_SUMMARY
           echo "| Platforms | linux/amd64, linux/arm64 |" >> $GITHUB_STEP_SUMMARY

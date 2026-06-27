@@ -170,7 +170,61 @@ npm run build
 - `GOOS=linux GOARCH=amd64` 指定目标平台和架构
 - `-o` 指定输出文件名
 
-### 部署说明
+### Docker 部署（推荐）
+
+通过 GitHub Actions 自动构建 Docker 镜像并推送到 DockerHub。
+
+#### 前置配置
+
+在 GitHub 仓库 Settings → Secrets and variables → Actions 中添加：
+
+| Secret 名称 | 说明 |
+|-------------|------|
+| `DOCKER_USER_NAME` | DockerHub 用户名（如 `kemiaomoretti`） |
+| `DOCKER_ACCESS_TOKEN` | DockerHub Access Token（权限选择 **Read & Write**） |
+
+#### 自动构建
+
+推送 `main` 分支或 `v*` 标签时会自动触发 GitHub Actions 工作流：
+- 构建 `linux/amd64` 和 `linux/arm64` 双平台镜像
+- 推送到 `kemiaomoretti/home-vue-go:latest` 或 `kemiaomoretti/home-vue-go:<版本号>`
+- 使用 GitHub Actions Cache 加速后续构建
+
+#### 快速部署
+
+```bash
+docker run -d \
+  --name home-vue-go \
+  -p 1551:1551 \
+  -p 1552:1552 \
+  -v $(pwd)/data:/app/data \
+  --restart unless-stopped \
+  kemiaomoretti/home-vue-go:latest
+```
+
+启动后访问：`http://服务器IP:1552`
+
+#### Docker Compose 部署
+
+```yaml
+# docker-compose.yml
+services:
+  home-vue-go:
+    image: kemiaomoretti/home-vue-go:latest
+    container_name: home-vue-go
+    ports:
+      - "1551:1551"
+      - "1552:1552"
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+```
+
+```bash
+docker compose up -d
+```
+
+### 传统部署（二进制文件）
 
 1. **上传文件到服务器：**
    - 上传 `home-vue-go` 二进制文件
