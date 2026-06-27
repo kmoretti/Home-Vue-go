@@ -580,6 +580,8 @@
                 <option value="Email">Email</option>
                 <option value="Github">Github</option>
                 <option value="QQ">QQ</option>
+                <option value="Telegram">Telegram</option>
+                <option value="BiliBili">BiliBili</option>
                 <option value="支付宝">支付宝</option>
                 <option value="微信">微信</option>
                 <option value="其他">其他</option>
@@ -606,9 +608,9 @@
                 <code>{{ contactForm.icon }}</code>
               </div>
             </div>
-            <div class="form-group" v-if="contactForm.type === 'Email' || contactForm.type === 'Github'">
+            <div class="form-group" v-if="isUrlType(contactForm.type)">
               <label>URL <span class="required">*</span></label>
-              <input v-model="contactForm.url" type="text" :placeholder="contactForm.type === 'Email' ? 'mailto:example@domain.com' : 'https://...'" required />
+              <input v-model="contactForm.url" type="text" :placeholder="urlPlaceholder(contactForm.type)" required />
               <small class="form-hint" v-if="contactForm.type === 'Email'">Email必须使用mailto:格式</small>
             </div>
             <div class="form-group" v-if="contactForm.type === '支付宝' || contactForm.type === '微信' || contactForm.type === 'QQ'">
@@ -917,6 +919,18 @@ const contactForm = ref({
 
 // 左下角用户菜单状态
 const userMenuOpen = ref(false)
+
+// 是否为需要 URL 输入框的联系人类型（非二维码类型）
+const isUrlType = (type) => {
+  return !['支付宝', '微信', 'QQ'].includes(type)
+}
+
+// URL 输入框的占位文本
+const urlPlaceholder = (type) => {
+  if (type === 'Email') return 'mailto:example@domain.com'
+  if (type === '其他') return 'https://... 或 mailto:...'
+  return 'https://...'
+}
 
 // 打开图标选择器
 const openIconPicker = (target) => {

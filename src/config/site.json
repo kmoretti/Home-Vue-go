@@ -1,32 +1,77 @@
 [
   {
     "name": "博客",
-    "url": "https://blog.bsgun.cn",
+    "url": "https://blog.081531.xyz",
     "icon": "fa fa-blog"
   },
   {
-    "name": "雨云",
-    "url": "https://www.rainyun.com/Lin_",
+    "name": "圣道云",
+    "url": "https://www.shengdaoyun.cn/",
     "icon": "fa fa-cloud "
   },
   {
     "name": "图床",
-    "url": "https://dev.bsgun.cn",
+    "url": "https://imgbed.081531.xyz",
     "icon": "fa fa-image"
   },
   {
-    "name": "封面",
-    "url": "https://cover.bsgun.cn",
+    "name": "相册",
+    "url": "https://gallery.081531.xyz",
     "icon": "fa fa-panorama"
   },
   {
     "name": "监测",
-    "url": "https://status.bsgun.cn",
+    "url": "https://uptime.081531.xyz/",
     "icon": "fa fa-chart-line"
   },
   {
-    "name": "图标",
-    "url": "https://icon.bsgun.cn/",
-    "icon": "fa fa-icons"
+    "name": "即刻",
+    "url": "https://m.081531.xyz/",
+    "icon": "solar:notes-bold-duotone"
+  },
+  {
+    "name": "盘搜",
+    "url": "https://s.081531.xyz/pansou",
+    "icon": "duo-icons:disk"
+  },
+  {
+    "name": "OpenList",
+    "url": "https://s.081531.xyz/openlist",
+    "icon": "picon:drive"
+  },
+  {
+    "name": "赞助",
+    "url": "https://s.081531.xyz/sponsor",
+    "icon": "octicon:sponsor-tiers-16"
+  },
+  {
+    "name": "Html工具",
+    "url": "https://s.081531.xyz/html",
+    "icon": "proicons:html"
+  },
+  {
+    "name": "音乐",
+    "url": "https://s.081531.xyz/music",
+    "icon": "tabler:music"
+  },
+  {
+    "name": "60s-news",
+    "url": "https://s.081531.xyz/news",
+    "icon": "wpf:news"
+  },
+  {
+    "name": "友链朋友圈",
+    "url": "https://s.081531.xyz/fc",
+    "icon": "iconoir:group"
+  },
+  {
+    "name": "Ech0-hub",
+    "url": "https://hub.ech0.app/",
+    "icon": "iconoir:neighbourhood"
+  },
+  {
+    "name": "临时邮箱",
+    "url": "https://s.081531.xyz/tempmail",
+    "icon": "material-symbols:mail-asterisk-outline"
   }
 ]
